@@ -1,0 +1,50 @@
+server:
+  port: 11000
+
+spring:
+  application:
+    name: mall
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    database: 10
+    timeout: 3000ms
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-nodes: 172.18.7.81:9300
+      cluster-name: elasticsearch
+
+mybatis:
+  mapper-locations:
+    - classpath*:mapper/*.xml
+    - classpath*:dao/*.xml
+  type-aliases-package: com.jzm.malltiny01.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# 自定义redis key
+redis:
+  key:
+    prefix:
+      authCode: "portal:authCode:"
+    expire:
+      authCode: 120 # 验证码超期时间
+
+# 自定义jwt key
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mySecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
+
+logging:
+  level:
+    com.jzm.malltiny01: debug
